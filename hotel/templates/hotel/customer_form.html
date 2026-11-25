@@ -1,0 +1,32 @@
+{% extends 'hotel/base.html' %}
+{% block title %}{% if customer %}Edit Customer{% else %}Add New Customer{% endif %}{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h2>{% if customer %}Edit Customer{% else %}Add New Customer{% endif %}</h2>
+</div>
+
+<div class="form-card">
+    <form method="POST">
+        {% csrf_token %}
+        <div class="form-group">
+            <label>Full Name</label>
+            <input type="text" name="full_name" value="{{ customer.full_name|default:'' }}" required>
+        </div>
+        <div class="form-group">
+            <label>Phone</label>
+            <input type="text" name="phone" value="{{ customer.phone|default:'' }}" required>
+        </div>
+        <div class="form-group">
+            <label>Email</label>
+            <input type="email" name="email" value="{{ customer.email|default:'' }}">
+        </div>
+        <div class="form-group">
+            <label>ID / Passport Number</label>
+            <input type="text" name="id_number" value="{{ customer.id_number|default:'' }}" required>
+        </div>
+        <button type="submit" class="btn btn-success">Save Customer</button>
+        <a href="{% url 'customer_list' %}" class="btn btn-secondary">Back</a>
+    </form>
+</div>
+{% endblock %}

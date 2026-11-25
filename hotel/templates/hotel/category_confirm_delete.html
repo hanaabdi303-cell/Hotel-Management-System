@@ -1,0 +1,14 @@
+{% extends 'hotel/base.html' %}
+{% block title %}Delete Category{% endblock %}
+
+{% block content %}
+<div class="form-card">
+    <h3 style="margin-bottom: 15px;">Ma hubtaa inaad tirtirto Category-ga: {{ category.name }}?</h3>
+    <p style="color: #64748b; margin-bottom: 15px;">Fiiro gaar ah: Qolalka ku xiran category-gan iyagana waa la tirtiri doonaa.</p>
+    <form method="POST">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Yes, Delete</button>
+        <a href="{% url 'category_list' %}" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+{% endblock %}

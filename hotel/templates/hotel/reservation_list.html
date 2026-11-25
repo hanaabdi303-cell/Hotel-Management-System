@@ -1,0 +1,46 @@
+{% extends 'hotel/base.html' %}
+{% block title %}Reservations{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h2>Hotel Reservations</h2>
+    <a href="{% url 'reservation_add' %}" class="btn btn-success">+ New Reservation</a>
+</div>
+
+<div class="table-box">
+    <table>
+        <thead>
+            <tr>
+                <th>Customer</th>
+                <th>Room</th>
+                <th>Check-In</th>
+                <th>Check-Out</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for res in reservations %}
+            <tr>
+                <td><strong>{{ res.customer.full_name }}</strong></td>
+                <td>Room {{ res.room.room_number }} ({{ res.room.category }})</td>
+                <td>{{ res.check_in_date }}</td>
+                <td>{{ res.check_out_date }}</td>
+                <td><span class="badge badge-blue">{{ res.status }}</span></td>
+                <td>
+                    {% if res.status == 'Booked' %}
+                        <a href="{% url 'reservation_checkin' res.id %}" class="btn btn-sm btn-primary">Check In</a>
+                    {% elif res.status == 'Checked-In' %}
+                        <a href="{% url 'reservation_checkout' res.id %}" class="btn btn-sm btn-warning">Check Out</a>
+                    {% else %}
+                        <span style="color:#64748b;">Completed</span>
+                    {% endif %}
+                </td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="6" style="text-align:center;">No reservations found.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

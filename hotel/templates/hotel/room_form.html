@@ -1,0 +1,45 @@
+{% extends 'hotel/base.html' %}
+{% block title %}{% if room %}Edit Room{% else %}Add New Room{% endif %}{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h2>{% if room %}Edit Room #{{ room.room_number }}{% else %}Add New Room{% endif %}</h2>
+</div>
+
+<div class="form-card">
+    <form method="POST">
+        {% csrf_token %}
+        <div class="form-group">
+            <label>Room Number</label>
+            <input type="text" name="room_number" value="{{ room.room_number|default:'' }}" required>
+        </div>
+        <div class="form-group">
+            <label>Category</label>
+            <select name="category" required>
+                <option value="">-- Choose Category --</option>
+                {% for cat in categories %}
+                    <option value="{{ cat.id }}" {% if room.category.id == cat.id %}selected{% endif %}>{{ cat.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Price ($)</label>
+            <input type="number" step="0.01" name="price" value="{{ room.price|default:'' }}" required>
+        </div>
+        <div class="form-group">
+            <label>Capacity (Guests)</label>
+            <input type="number" name="capacity" value="{{ room.capacity|default:'' }}" required>
+        </div>
+        <div class="form-group">
+            <label>Status</label>
+            <select name="status">
+                <option value="Available" {% if room.status == 'Available' %}selected{% endif %}>Available</option>
+                <option value="Occupied" {% if room.status == 'Occupied' %}selected{% endif %}>Occupied</option>
+                <option value="Maintenance" {% if room.status == 'Maintenance' %}selected{% endif %}>Maintenance</option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Save Room</button>
+        <a href="{% url 'room_list' %}" class="btn btn-secondary">Back</a>
+    </form>
+</div>
+{% endblock %}

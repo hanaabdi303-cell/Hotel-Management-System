@@ -1,0 +1,59 @@
+{% extends 'hotel/base.html' %}
+{% block title %}Rooms{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h2>Room Management</h2>
+    <a href="{% url 'room_add' %}" class="btn btn-primary">+ Add New Room</a>
+</div>
+
+<form method="GET" style="display: flex; gap: 10px; margin-bottom: 20px; max-width: 600px;">
+    <input type="text" name="q" value="{{ search_query }}" placeholder="Search room number..." style="padding: 9px 12px; border: 1px solid #cbd5e1; border-radius: 6px; flex: 1;">
+    <select name="status" style="padding: 9px 12px; border: 1px solid #cbd5e1; border-radius: 6px;">
+        <option value="">All Statuses</option>
+        <option value="Available" {% if status_filter == 'Available' %}selected{% endif %}>Available</option>
+        <option value="Occupied" {% if status_filter == 'Occupied' %}selected{% endif %}>Occupied</option>
+        <option value="Maintenance" {% if status_filter == 'Maintenance' %}selected{% endif %}>Maintenance</option>
+    </select>
+    <button type="submit" class="btn btn-primary">Filter</button>
+    <a href="{% url 'room_list' %}" class="btn btn-secondary">Reset</a>
+</form>
+
+<div class="table-box">
+    <table>
+        <thead>
+            <tr>
+                <th>Room Number</th>
+                <th>Category</th>
+                <th>Price</th>
+                <th>Capacity</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for room in rooms %}
+            <tr>
+                <td><strong>{{ room.room_number }}</strong></td>
+                <td>{{ room.category }}</td>
+                <td>${{ room.price }}</td>
+                <td>{{ room.capacity }} Guests</td>
+                <td>
+                    {% if room.status == 'Available' %}
+                        <span class="badge badge-green">Available</span>
+                    {% else %}
+                        <span class="badge badge-yellow">{{ room.status }}</span>
+                    {% endif %}
+                </td>
+                <td>
+                    <a href="{% url 'room_edit' room.id %}" class="btn btn-sm btn-warning">Edit</a>
+                    <a href="{% url 'room_delete' room.id %}" class="btn btn-sm btn-danger">Delete</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="6" style="text-align:center;">No matching rooms found.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

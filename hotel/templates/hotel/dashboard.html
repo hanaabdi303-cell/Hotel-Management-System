@@ -1,0 +1,33 @@
+{% extends 'hotel/base.html' %}
+{% block title %}Dashboard - Hotel System{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h2>System Overview</h2>
+</div>
+
+<div class="cards-grid">
+    <div class="card">
+        <h4>Total Rooms</h4>
+        <div class="number">{{ total_rooms }}</div>
+    </div>
+    <div class="card green">
+        <h4>Available Rooms</h4>
+        <div class="number">{{ available_rooms }}</div>
+    </div>
+    <div class="card purple">
+        <h4>Total Customers</h4>
+        <div class="number">{{ total_customers }}</div>
+    </div>
+    <div class="card orange">
+        <h4>Active Bookings</h4>
+        <div class="number">{{ active_reservations }}</div>
+    </div>
+</div>
+
+<div style="display: flex; gap: 15px;">
+    <a href="{% url 'room_list' %}" class="btn btn-primary">Manage Rooms</a>
+    <a href="{% url 'customer_list' %}" class="btn btn-success">Manage Customers</a>
+    <a href="{% url 'reservation_list' %}" class="btn btn-warning">Manage Reservations</a>
+</div>
+{% endblock %}

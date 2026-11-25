@@ -1,0 +1,13 @@
+{% extends 'hotel/base.html' %}
+{% block title %}Delete Room{% endblock %}
+
+{% block content %}
+<div class="form-card">
+    <h3 style="margin-bottom: 15px;">Ma hubtaa inaad tirtirto Qolka #{{ room.room_number }}?</h3>
+    <form method="POST">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Yes, Delete</button>
+        <a href="{% url 'room_list' %}" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+{% endblock %}
