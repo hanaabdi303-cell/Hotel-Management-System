@@ -118,6 +118,7 @@ def customer_add(request):
             full_name=request.POST.get('full_name'),
             phone=request.POST.get('phone'),
             email=request.POST.get('email'),
+            address=request.POST.get('address', 'Hargeisa'),
             id_number=request.POST.get('id_number')
         )
         return redirect('customer_list')
@@ -130,6 +131,7 @@ def customer_edit(request, id):
         customer.full_name = request.POST.get('full_name')
         customer.phone = request.POST.get('phone')
         customer.email = request.POST.get('email')
+        customer.address = request.POST.get('address', 'Hargeisa')
         customer.id_number = request.POST.get('id_number')
         customer.save()
         return redirect('customer_list')
